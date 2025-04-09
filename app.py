@@ -9,15 +9,15 @@ import pickle
 app = Flask(__name__)
 
 # Load scaler and data
-scaler = joblib.load('../model/cluster_scaler.joblib')
-df = pd.read_csv('../data/kickstarter_cluster_data.csv')  # Load your dataset
+scaler = joblib.load('model/cluster_scaler.joblib')
+df = pd.read_csv('data/kickstarter_cluster_data.csv')  # Load your dataset
 X_scaled = scaler.transform(df[['log_goal', 'duration', 'launch_month', 'launch_year', 
                                 'category_success_rate', 'country_success_rate']])  # Pre-scale dataset features
 
 # Load success rate mappings
-with open('../model/category_success_rate.pkl', 'rb') as f:
+with open('model/category_success_rate.pkl', 'rb') as f:
     category_success_rate = pickle.load(f)
-with open('../model/country_success_rate.pkl', 'rb') as f:
+with open('model/country_success_rate.pkl', 'rb') as f:
     country_success_rate = pickle.load(f)
 
 # Function to create Kickstarter search URL
@@ -95,4 +95,5 @@ def predict():
         return jsonify({'error': str(e)}), 400
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5001)
+    # app.run(debug=True, host='0.0.0.0', port=5001)
+    app.run()
