@@ -86,6 +86,7 @@ def predict():
 
         # Return JSON response
         response = {
+            'success_predition': 0.42,
             'closest_successful': closest_successful_data,
             'closest_failed': closest_failed_data
         }
