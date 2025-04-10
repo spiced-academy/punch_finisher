@@ -9,6 +9,7 @@ import urllib.parse
 import pickle
 
 app = Flask(__name__)
+CORS(app)  # Allow all origins by default
 
 # Load cluster-related scaler and data
 cluster_scaler = joblib.load('model/cluster_scaler.joblib')
@@ -159,5 +160,4 @@ def predict():
 if __name__ == '__main__':
     # app.run(debug=True, host='0.0.0.0', port=5001)  # Changed port to avoid conflict
     app.run()
-    CORS(app)  # Allow all origins by default
     
