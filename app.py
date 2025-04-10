@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import pandas as pd
 import numpy as np
 import joblib
@@ -40,6 +41,7 @@ def preprocess_rf_input(data, feature_names):
         'launch_month': int(data['launch_month']),
         'launch_year': int(data['launch_year']),
         'category': data['category'],
+        'subcategory': data['subcategory'],
         'country': data['country']
     }
 
@@ -56,6 +58,11 @@ def preprocess_rf_input(data, feature_names):
     category_col = f"category_{new_project['category']}"
     if category_col in feature_names:
         input_df[category_col] = 1
+        
+    # One-hot encode subcategory
+    subcategory_col = f"subcategory{new_project['subcategory']}"
+    if subcategory_col in feature_names:
+        input_df[subcategory_col] = 1
 
     # One-hot encode country
     country_col = f"country_{new_project['country']}"
@@ -152,3 +159,5 @@ def predict():
 if __name__ == '__main__':
     # app.run(debug=True, host='0.0.0.0', port=5001)  # Changed port to avoid conflict
     app.run()
+    CORS(app)  # Allow all origins by default
+    
